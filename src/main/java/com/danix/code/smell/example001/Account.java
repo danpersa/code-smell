@@ -11,9 +11,7 @@ public class Account {
 
     private int daysOverdrawn;
 
-    private double money;
-
-    private String currency;
+    private Money money;
 
     private Customer customer;
 
@@ -62,12 +60,8 @@ public class Account {
         this.iban = iban;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(Money money) {
         this.money = money;
-    }
-
-    public double getMoney() {
-        return money;
     }
 
     public Customer getCustomer() {
@@ -86,15 +80,15 @@ public class Account {
         return customer.getName() + " " + customer.getEmail();
     }
 
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public boolean isOverdraft() {
-        return money < 0;
+        return money.getAmount() < 0;
+    }
+
+    public void substract(Money money) {
+        this.money = this.money.substract(money);
+    }
+
+    public double getMoneyAmount() {
+        return money.getAmount();
     }
 }
