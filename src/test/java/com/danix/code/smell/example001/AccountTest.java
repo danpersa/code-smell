@@ -1,5 +1,6 @@
 package com.danix.code.smell.example001;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -9,6 +10,13 @@ import static org.junit.Assert.assertThat;
  * @author danix
  */
 public class AccountTest {
+
+    private CustomerFactory customerFactory;
+
+    @Before
+    public void setUp() {
+        customerFactory = new CustomerFactory();
+    }
 
     @Test
     public void testBankchargePremiumLessThanAWeek() {
@@ -37,7 +45,7 @@ public class AccountTest {
     @Test
     public void testPrintCustomer() {
         Account account = getNormalAccount();
-        Customer customer = new Customer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
+        Customer customer = customerFactory.createPerson("danix", "dan", "dan@mail.com", account);
         account.setCustomer(customer);
         assertThat(account.printCustomer(), is("danix dan@mail.com"));
     }

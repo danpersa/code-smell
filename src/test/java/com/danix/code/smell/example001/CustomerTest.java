@@ -1,5 +1,6 @@
 package com.danix.code.smell.example001;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -9,6 +10,13 @@ import static org.junit.Assert.assertThat;
  * @author danix
  */
 public class CustomerTest {
+
+    private CustomerFactory customerFactory;
+
+    @Before
+    public void setUp() {
+        customerFactory = new CustomerFactory();
+    }
 
     @Test
     public void testWithdrawPersonWithNormalAccount() throws Exception {
@@ -118,13 +126,13 @@ public class CustomerTest {
     }
 
     private Customer getPersonCustomer(Account account) {
-        Customer customer = new Customer("danix", "dan", "dan@mail.com", CustomerType.PERSON, account);
+        Customer customer = customerFactory.createPerson("danix", "dan", "dan@mail.com", account);
         account.setCustomer(customer);
         return customer;
     }
 
     private Customer getCompanyCustomer(Account account) {
-        Customer customer = new Customer("company", "company@mail.com", account, 0.50);
+        Customer customer = customerFactory.createCompany("company", "company@mail.com", account, 0.50);
         account.setCustomer(customer);
         return customer;
     }

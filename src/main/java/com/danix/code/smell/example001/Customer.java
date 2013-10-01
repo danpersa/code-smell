@@ -12,19 +12,12 @@ public class Customer {
     private Account account;
     private double companyOverdraftDiscount = 1;
 
-    public Customer(String name, String surname, String email, CustomerType customerType, Account account) {
+    Customer(String name, String surname, String email, CustomerType customerType,
+             Account account, double companyOverdraftDiscount) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.customerType = customerType;
-        this.account = account;
-    }
-
-    // use only to create companies
-    public Customer(String name, String email, Account account, double companyOverdraftDiscount) {
-        this.name = name;
-        this.email = email;
-        this.customerType = CustomerType.COMPANY;
         this.account = account;
         this.companyOverdraftDiscount = companyOverdraftDiscount;
     }
@@ -36,8 +29,7 @@ public class Customer {
         if (account.getType().isPremium()) {
             switch (customerType) {
                 case COMPANY:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (account.isOverdraft()) {
                         // 50 percent discount for overdraft for premium account
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount / 2);
                     } else {
@@ -45,8 +37,7 @@ public class Customer {
                     }
                     break;
                 case PERSON:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (account.isOverdraft()) {
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
                     } else {
                         account.setMoney(account.getMoney() - sum);
@@ -56,8 +47,7 @@ public class Customer {
         } else {
             switch (customerType) {
                 case COMPANY:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (account.isOverdraft()) {
                         // no discount for overdraft for not premium account
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount);
                     } else {
@@ -65,8 +55,7 @@ public class Customer {
                     }
                     break;
                 case PERSON:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (account.isOverdraft()) {
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
                     } else {
                         account.setMoney(account.getMoney() - sum);
