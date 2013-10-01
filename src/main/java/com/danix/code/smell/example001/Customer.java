@@ -36,8 +36,7 @@ public class Customer {
         if (account.getType().isPremium()) {
             switch (customerType) {
                 case COMPANY:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (isOverdraft()) {
                         // 50 percent discount for overdraft for premium account
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount / 2);
                     } else {
@@ -45,8 +44,7 @@ public class Customer {
                     }
                     break;
                 case PERSON:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (isOverdraft()) {
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
                     } else {
                         account.setMoney(account.getMoney() - sum);
@@ -56,8 +54,7 @@ public class Customer {
         } else {
             switch (customerType) {
                 case COMPANY:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (isOverdraft()) {
                         // no discount for overdraft for not premium account
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount);
                     } else {
@@ -65,8 +62,7 @@ public class Customer {
                     }
                     break;
                 case PERSON:
-                    // we are in overdraft
-                    if (account.getMoney() < 0) {
+                    if (isOverdraft()) {
                         account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
                     } else {
                         account.setMoney(account.getMoney() - sum);
@@ -74,6 +70,10 @@ public class Customer {
                     break;
             }
         }
+    }
+
+    private boolean isOverdraft() {
+        return account.getMoney() < 0;
     }
 
     public String getName() {
