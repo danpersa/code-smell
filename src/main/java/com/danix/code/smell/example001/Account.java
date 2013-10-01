@@ -93,4 +93,8 @@ public class Account {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+    public boolean isOverdraft() {
+        return money < 0;
+    }
 }
