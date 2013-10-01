@@ -12,19 +12,12 @@ public class Customer {
     private Account account;
     private double companyOverdraftDiscount = 1;
 
-    public Customer(String name, String surname, String email, CustomerType customerType, Account account) {
+    Customer(String name, String surname, String email, CustomerType customerType,
+             Account account, double companyOverdraftDiscount) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.customerType = customerType;
-        this.account = account;
-    }
-
-    // use only to create companies
-    public Customer(String name, String email, Account account, double companyOverdraftDiscount) {
-        this.name = name;
-        this.email = email;
-        this.customerType = CustomerType.COMPANY;
         this.account = account;
         this.companyOverdraftDiscount = companyOverdraftDiscount;
     }
