@@ -15,7 +15,7 @@ public abstract class Customer {
         this.account = account;
     }
 
-    public abstract void withdraw(double sum, String currency);
+    public abstract void withdraw(Money money);
 
     protected abstract String getFullName();
 
