@@ -1,13 +1,14 @@
 package com.danix.code.smell.example001;
 
+import static org.hamcrest.CoreMatchers.is;
+
+import static org.junit.Assert.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
 /**
- * @author danix
+ * @author  danix
  */
 public class AccountTest {
 
@@ -42,20 +43,12 @@ public class AccountTest {
         assertThat(account.overdraftFee(), is(0.20));
     }
 
-    @Test
-    public void testPrintCustomer() {
-        Account account = getNormalAccount();
-        Customer customer = customerFactory.createPerson("danix", "dan", "dan@mail.com", account);
-        account.setCustomer(customer);
-        assertThat(account.printCustomer(), is("danix dan@mail.com"));
-    }
-
     private Account getNormalAccount() {
         AccountType premium = new AccountType(false);
         return new Account(premium, 9);
     }
 
-    private Account getPremiumAccount(int daysOverdrawn) {
+    private Account getPremiumAccount(final int daysOverdrawn) {
         AccountType normal = new AccountType(true);
         return new Account(normal, daysOverdrawn);
     }

@@ -1,7 +1,7 @@
 package com.danix.code.smell.example001;
 
 /**
- * @author danix
+ * @author  danix
  */
 public abstract class Customer {
 
@@ -9,7 +9,7 @@ public abstract class Customer {
     protected String email;
     protected Account account;
 
-    Customer(String name, String email, Account account) {
+    Customer(final String name, final String email, final Account account) {
         this.name = name;
         this.email = email;
         this.account = account;
@@ -17,13 +17,13 @@ public abstract class Customer {
 
     public abstract void withdraw(double sum, String currency);
 
-    abstract protected String getFullName();
+    protected abstract String getFullName();
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -31,27 +31,7 @@ public abstract class Customer {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
-    }
-
-    public String printCustomerDaysOverdrawn() {
-        String fullName = getFullName();
-
-        String accountDescription = "Account: IBAN: " + account.getIban()
-                + ", Days Overdrawn: " + account.getDaysOverdrawn();
-        return fullName + accountDescription;
-    }
-
-    public String printCustomerMoney() {
-        String fullName = getFullName();
-        String accountDescription = "";
-        accountDescription += "Account: IBAN: " + account.getIban() + ", Money: " + account.getMoneyAmount();
-        return fullName + accountDescription;
-    }
-
-    public String printCustomerAccount() {
-        return "Account: IBAN: " + account.getIban() + ", Money: "
-                + account.getMoneyAmount() + ", Account type: " + account.getType();
     }
 }
