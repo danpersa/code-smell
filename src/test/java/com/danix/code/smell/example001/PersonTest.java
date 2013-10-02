@@ -1,22 +1,26 @@
 package com.danix.code.smell.example001;
 
-import org.junit.Test;
+import static org.hamcrest.CoreMatchers.is;
+
+import static org.junit.Assert.assertThat;
 
 import static com.danix.code.smell.example001.AccountTestUtils.getAccountByTypeAndMoney;
 import static com.danix.code.smell.example001.CustomerTestUtils.getPersonCustomer;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
 
 /**
- * @author danix
+ * @author  danix
  */
 public class PersonTest {
+
+    public static final Money SOME_EURO = Money.newEuro(10);
 
     @Test
     public void testWithdrawPersonWithNormalAccount() throws Exception {
         Account account = getAccountByTypeAndMoney(false, 34.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.withdraw(SOME_EURO);
         assertThat(account.getMoneyAmount(), is(24.0));
     }
 
@@ -24,7 +28,7 @@ public class PersonTest {
     public void testWithdrawPersonWithNormalAccountAndOverdraft() throws Exception {
         Account account = getAccountByTypeAndMoney(false, -10.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.withdraw(SOME_EURO);
         assertThat(account.getMoneyAmount(), is(-22.0));
     }
 
@@ -32,7 +36,7 @@ public class PersonTest {
     public void testWithdrawPersonWithPremiumAccount() throws Exception {
         Account account = getAccountByTypeAndMoney(true, 34.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.withdraw(SOME_EURO);
         assertThat(account.getMoneyAmount(), is(24.0));
     }
 
@@ -40,7 +44,7 @@ public class PersonTest {
     public void testWithdrawPersonWithPremiumAccountAndOverdraft() throws Exception {
         Account account = getAccountByTypeAndMoney(true, -10.0);
         Customer customer = getPersonCustomer(account);
-        customer.withdraw(10, "EUR");
+        customer.withdraw(SOME_EURO);
         assertThat(account.getMoneyAmount(), is(-21.0));
     }
 }
